@@ -1,15 +1,12 @@
-# Stage 1: Build the project using Ant and JDK 11 (or appropriate JDK version)
-FROM frekele/ant:1.10.3-jdk8 AS build
-WORKDIR /app
-COPY . .
-RUN ant clean dist
-
-# Stage 2: Deploy to Tomcat
+# Deploy to Tomcat using the pre-compiled WAR file
 FROM tomcat:9-jre8-alpine
 WORKDIR /usr/local/tomcat/webapps
-# Remove default apps
+
+# Remove default Tomcat apps
 RUN rm -rf *
-# Copy the compiled war file to ROOT.war so it serves at /
-COPY --from=build /app/dist/*.war ROOT.war
+
+# Copy the pre-compiled war file directly to ROOT.war so it serves at /
+COPY dist/FYP1.war ROOT.war
+
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
