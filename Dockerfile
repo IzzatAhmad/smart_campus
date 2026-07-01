@@ -1,5 +1,5 @@
 # Deploy to Tomcat using the pre-compiled WAR file
-FROM tomcat:9-jre8-alpine
+FROM tomcat:9-jdk21
 WORKDIR /usr/local/tomcat/webapps
 
 # Remove default Tomcat apps
